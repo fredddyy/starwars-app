@@ -177,7 +177,10 @@
           <tr>
             <td>Total: {{ data2.length }}</td>
             <td></td>
-            <td>Sum: {{ totalHeightSum }}</td>
+            <td>
+              Sum: {{ totalHeightSum }}cm({{ totalHeightSuminFeet }}ft /
+              {{ totalHeightSuminInch }}inch)
+            </td>
           </tr>
         </tbody>
 
@@ -210,7 +213,7 @@ export default {
       animated: false,
       male: "male",
       female: "female",
-      data2: ["i"],
+      data2: [""],
     };
   },
 
@@ -277,9 +280,19 @@ export default {
 
     // sum of heights
     totalHeightSum() {
+      if (this.data2 < 2) {
+        return 0;
+      }
       return this.data2
         .map((i) => i.height)
         .reduce((a, b) => (parseInt(a) || 0) + (parseInt(b) || 0));
+    },
+
+    totalHeightSuminFeet() {
+      return (this.totalHeightSum / 30.48).toFixed();
+    },
+    totalHeightSuminInch() {
+      return (this.totalHeightSum * 0.393701).toFixed();
     },
   },
 
